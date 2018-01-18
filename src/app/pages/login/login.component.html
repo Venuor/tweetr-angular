@@ -1,0 +1,32 @@
+<app-background>
+  <app-center>
+    <app-navigation></app-navigation>
+
+    <section class="ui grid" style="margin-top: 30px;">
+      <div class="ui raised segment five wide centered column">
+        <div class="ui error message" *ngIf="isUsernameInvalid() || isPasswordInvalid() || message">
+          <div class="header">
+            Invalid input in login form!
+          </div>
+          <ul class="list">
+            <li *ngIf="message">{{message}}</li>
+            <li *ngIf="isUsernameInvalid()">The username cannot be empty!</li>
+            <li *ngIf="isPasswordInvalid()">The password cannot be empty!</li>
+          </ul>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
+          <div class="field" [ngClass]="{error: isUsernameInvalid()}" >
+            <label>Username</label>
+            <input type="text" formControlName="username" placeholder="Username" />
+          </div>
+          <div class="field" [ngClass]="{error: isPasswordInvalid()}">
+            <label>Password</label>
+            <input type="password" formControlName="password" placeholder="Password" />
+          </div>
+          <input type="submit" class="ui orange button" value="Login" [disabled]="loginForm.pristine && !isUsernameInvalid() && !isPasswordInvalid()" />
+        </form>
+      </div>
+    </section>
+  </app-center>
+</app-background>
+

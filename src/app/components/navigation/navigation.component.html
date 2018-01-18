@@ -1,0 +1,26 @@
+<nav class="ui bottom attached menu">
+  <div class="left menu">
+    <a class="header item" routerLink="/">Tweetr</a>
+    <a class="item" routerLink="/global">Global Timeline</a>
+  </div>
+
+  <div class="right menu" >
+    <ng-template *ngIf="isLoggedIn;else notLoggedIn">
+      <a class="item" routerLink="/home">Home</a>
+      <a class="item" routerLink="/timeline">Timeline</a>
+      <div class="ui dropdown item">
+        {{username}}
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <a class="item" routerLink="/settings">Settings</a>
+          <a class="item" routerLink="/password">Change Password</a>
+          <a class="item" routerLink="/logout">Logout</a>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #notLoggedIn>
+      <a class="item" routerLink="/signup"> Signup</a>
+      <a class="item" routerLink="/login">  Login</a>
+    </ng-template>
+  </div>
+</nav>
