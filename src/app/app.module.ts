@@ -12,6 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageService } from './services/local-storage.service';
+import { SignupComponent } from './pages/signup/signup.component';
+import { ValidatorService } from './services/validator.service';
+import { SignupService } from './services/signup.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { LocalStorageService } from './services/local-storage.service';
     BackgroundComponent,
     CenterComponent,
     LoginComponent,
-    NavigationComponent
+    NavigationComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ import { LocalStorageService } from './services/local-storage.service';
   ],
   providers: [
     LoginService,
-    LocalStorageService
+    LocalStorageService,
+    ValidatorService,
+    SignupService
   ],
   bootstrap: [AppComponent]
 })
