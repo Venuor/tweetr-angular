@@ -1,0 +1,43 @@
+<div class="ui segments">
+  <article class="ui segment">
+    <h2><i class="circular {{icon}} icon"></i> {{title}}</h2>
+  </article>
+  <div class="ui segment" *ngIf="tweets.length === 0">
+    <span class="content">No Tweets to display!</span>
+  </div>
+  <article class="ui segment" *ngFor="let tweet of tweets">
+    <div class="ui feed">
+      <div class="event">
+        <div class="label">
+          <div class="image container"
+               [style.background-image]="secureBackgroundUrl(tweet.user.image)"
+               style="background-size: cover; border-radius: 500rem;">
+          </div>
+        </div>
+        <div class="content">
+          <div class="summary">
+            <a class="user" href="/user/{{tweet.user.username}}">
+              {{tweet.user.displayname}}
+            </a>
+            <div class="date" title="{{tweet.date | date:'EEE MMM dd yyyy HH:mm:ss Z (z)'}}">
+              {{tweet.date | amTimeAgo}}
+            </div>
+          </div>
+          <div class="extra text">
+            {{tweet.text}}
+          </div>
+          <ng-container *ngIf="tweet.image">
+            <div style="margin-top: 10px;"></div>
+            <img class="ui fluid image" [src]="getSecureImage(tweet.image)" />
+          </ng-container>
+          <ng-container *ngIf="isUserHome()">
+            <div class="meta">
+              <a href="/tweet/remove/{{tweet.id}}">Remove</a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+

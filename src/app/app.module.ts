@@ -15,6 +15,10 @@ import { LocalStorageService } from './services/local-storage.service';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ValidatorService } from './services/validator.service';
 import { SignupService } from './services/signup.service';
+import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { TweetService } from './services/tweet.service';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -24,19 +28,23 @@ import { SignupService } from './services/signup.service';
     CenterComponent,
     LoginComponent,
     NavigationComponent,
-    SignupComponent
+    SignupComponent,
+    GlobalTimelineComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MomentModule
   ],
   providers: [
     LoginService,
     LocalStorageService,
     ValidatorService,
-    SignupService
+    SignupService,
+    TweetService
   ],
   bootstrap: [AppComponent]
 })
