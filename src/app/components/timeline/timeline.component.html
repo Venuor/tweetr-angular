@@ -2,6 +2,9 @@
   <article class="ui segment">
     <h2><i class="circular {{icon}} icon"></i> {{title}}</h2>
   </article>
+
+  <ng-content></ng-content>
+
   <div class="ui segment" *ngIf="tweets.length === 0">
     <span class="content">No Tweets to display!</span>
   </div>
@@ -30,9 +33,9 @@
             <div style="margin-top: 10px;"></div>
             <img class="ui fluid image" [src]="getSecureImage(tweet.image)" />
           </ng-container>
-          <ng-container *ngIf="isUserHome()">
+          <ng-container *ngIf="showRemove">
             <div class="meta">
-              <a href="/tweet/remove/{{tweet.id}}">Remove</a>
+              <a (click)="removeTweet(tweet.id)">Remove</a>
             </div>
           </ng-container>
         </div>

@@ -4,6 +4,7 @@ import { IndexComponent } from './pages/index/index.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline.component';
+import { UserComponent } from './pages/user/user.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,13 @@ const routes: Routes = [
     component: GlobalTimelineComponent,
     data: {
       title: 'Tweetr - Global Timeline'
+    }
+  },
+  {
+    path: 'user/:username',
+    component: UserComponent,
+    data: {
+      title: 'Tweetr'
     }
   }
 ];

@@ -9,7 +9,6 @@ import { CenterComponent } from './components/center/center.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageService } from './services/local-storage.service';
 import { SignupComponent } from './pages/signup/signup.component';
@@ -19,6 +18,9 @@ import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { TweetService } from './services/tweet.service';
 import { MomentModule } from 'angular2-moment';
+import { UserComponent } from './pages/user/user.component';
+import { UserService } from './services/user.service';
+import { UsercardComponent } from './components/usercard/usercard.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { MomentModule } from 'angular2-moment';
     NavigationComponent,
     SignupComponent,
     GlobalTimelineComponent,
-    TimelineComponent
+    TimelineComponent,
+    UserComponent,
+    UsercardComponent
   ],
   imports: [
     BrowserModule,
@@ -40,11 +44,11 @@ import { MomentModule } from 'angular2-moment';
     MomentModule
   ],
   providers: [
-    LoginService,
     LocalStorageService,
     ValidatorService,
     SignupService,
-    TweetService
+    TweetService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

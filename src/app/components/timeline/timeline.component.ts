@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Tweet } from '../../model/tweet';
 import { DomSanitizer, SafeStyle, SafeUrl } from '@angular/platform-browser';
 import { ApiSettings } from '../../model/api-settings';
@@ -12,11 +12,11 @@ export class TimelineComponent {
   @Input() tweets: Tweet[];
   @Input() title: string;
   @Input() icon: string;
+  @Input() showRemove: string;
+  @Output() removeEvent: EventEmitter<string>;
 
-  constructor(private sanitizer: DomSanitizer) { }
-
-  isUserHome(): boolean {
-    return false;
+  constructor(private sanitizer: DomSanitizer) {
+    this.removeEvent = new EventEmitter();
   }
 
   getSecureImage(part: string): SafeUrl {
@@ -25,5 +25,9 @@ export class TimelineComponent {
 
   secureBackgroundUrl(part: string): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle('url(' + ApiSettings.API_HOST + part + ')');
+  }
+
+  removeTweet(id: string) {
+    this.removeEvent.emit(id);
   }
 }

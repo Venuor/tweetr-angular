@@ -13,4 +13,8 @@ export class LocalStorageService {
   public getJwtToken(): string {
     return localStorage.getItem(this.tokenKey);
   }
+
+  public clear() {
+    localStorage.clear();
+  }
 }

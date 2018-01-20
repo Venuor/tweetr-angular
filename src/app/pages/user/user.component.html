@@ -1,0 +1,35 @@
+<app-center>
+  <app-navigation></app-navigation>
+
+  <section class="ui grid" style="margin-top: 5px;">
+    <div class="ui four wide column">
+      <app-usercard *ngIf="user" (followButtonEvent)="updateUser()"
+        [user]="user" [showButton]="showButton" [isFollowing]="isFollowing" ></app-usercard>
+    </div>
+    <div class="ui twelve wide column" *ngIf="user">
+      <app-timeline (removeEvent)="removeTweet($event)" [tweets]="tweets" [title]="user.displayname + '\'s Tweets'" [showRemove]="showRemove" icon="comment">
+        <article class="ui clearing segment" *ngIf="!showButton && loggedInUser">
+          <form [formGroup]="tweetForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
+            <textarea rows="3" placeholder="Tweet..." maxlength="140" formControlName="text" style="resize: none"></textarea>
+
+            <div style="margin-top: 10px;"></div>
+
+            <label for="image-input">
+              <span class="ui right labeled left floated icon button">
+                Choose File
+                <i class="file icon"></i>
+              </span>
+            </label>
+            <input type="file" #image id="image-input" (change)="updateFileDisplay($event)" style="display: none" />
+            <span>{{fileName}}</span>
+
+            <button class="ui orange right labeled right floated icon button">
+              Submit
+              <i class="send outline icon"></i>
+            </button>
+          </form>
+        </article>
+      </app-timeline>
+    </div>
+  </section>
+</app-center>
