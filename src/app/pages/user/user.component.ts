@@ -64,9 +64,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.fileName = '';
         this.getTweets(this.user.username);
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(this.handleError);
   }
 
   updateUser() {
@@ -76,7 +74,7 @@ export class UserComponent implements OnInit, OnDestroy {
   removeTweet($event) {
     this.tweetService.deleteTweet($event)
       .then(result => this.getTweets(this.user.username))
-      .catch(err => console.log(err));
+      .catch(this.handleError);
   }
 
   private getUser(username: string) {
@@ -85,8 +83,13 @@ export class UserComponent implements OnInit, OnDestroy {
       .then(user => {
         this.user = user;
         this.titleService.setTitle('Tweetr - ' + user.displayname);
-        return this.userService.getLoggedInUser();
+        this.getLoggedInUser();
       })
+      .catch(err => console.log(err));
+  }
+
+  private getLoggedInUser() {
+    this.userService.getLoggedInUser()
       .then(loggedInUser => {
         this.showButton = loggedInUser !== null && loggedInUser.username !== this.user.username;
         this.loggedInUser = loggedInUser;
@@ -106,7 +109,9 @@ export class UserComponent implements OnInit, OnDestroy {
         }
       })
       .catch(err => {
-        console.log(err);
+        this.showButton = false;
+        this.loggedInUser = null;
+        this.showRemove = false;
       });
   }
 
@@ -114,6 +119,15 @@ export class UserComponent implements OnInit, OnDestroy {
     this.tweetService.getTweetsForUsername(username)
       .toPromise()
       .then(tweets => this.tweets = tweets);
+  }
+
+  private handleError(error: any) {
+    if (error.error.statusCode === 401) {
+      this.getUser(this.user.username);
+      this.userService.logout();
+    }
+
+    console.log(error);
   }
 
   ngOnDestroy(): void {

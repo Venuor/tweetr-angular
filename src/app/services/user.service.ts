@@ -20,7 +20,7 @@ export class UserService {
         this.localStorageService.setJwtToken(response.token);
         return response;
       })
-      .catch(this.handleError);
+      .catch(error => this.handleError(error));
   }
 
   getUser(username: string) {
@@ -34,7 +34,7 @@ export class UserService {
       { headers: this.getAuthHeader() }
       )
       .toPromise()
-      .catch(this.handleError);
+      .catch(error => this.handleError(error));
   }
 
   public unsubscribe(username: string): Promise<any> {
@@ -44,7 +44,7 @@ export class UserService {
       { headers: this.getAuthHeader() }
       )
       .toPromise()
-      .catch(this.handleError);
+      .catch(error => this.handleError(error));
   }
 
   public getLoggedInUser(): Promise<User> {
@@ -61,11 +61,15 @@ export class UserService {
             this.user = user;
             return user;
           })
-          .catch(this.handleError);
+          .catch(error => this.handleError(error));
       }
     } else {
       return Promise.resolve(null);
     }
+  }
+
+  public logout() {
+    this.resetStoredValues();
   }
 
   private getAuthHeader(): HttpHeaders {
@@ -74,11 +78,14 @@ export class UserService {
   }
 
   private handleError(error: any): Promise<any> {
-    if (error.statusCode === 401) {
-      this.localStorageService.clear();
-      this.user = null;
+    if (error.error.statusCode === 401) {
+      this.resetStoredValues();
     }
-    console.log(error);
     return Promise.reject(error.message || error);
+  }
+
+  private resetStoredValues() {
+    this.localStorageService.clear();
+    this.user = null;
   }
 }
