@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline.component';
 import { UserComponent } from './pages/user/user.component';
+import { UserTimelineComponent } from './pages/user-timeline/user-timeline.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,13 @@ const routes: Routes = [
   {
     path: 'user/:username',
     component: UserComponent,
+    data: {
+      title: 'Tweetr'
+    }
+  },
+  {
+    path: 'timeline',
+    component: UserTimelineComponent,
     data: {
       title: 'Tweetr'
     }

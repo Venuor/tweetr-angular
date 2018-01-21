@@ -21,6 +21,7 @@ import { MomentModule } from 'angular2-moment';
 import { UserComponent } from './pages/user/user.component';
 import { UserService } from './services/user.service';
 import { UsercardComponent } from './components/usercard/usercard.component';
+import { UserTimelineComponent } from './pages/user-timeline/user-timeline.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { UsercardComponent } from './components/usercard/usercard.component';
     GlobalTimelineComponent,
     TimelineComponent,
     UserComponent,
-    UsercardComponent
+    UsercardComponent,
+    UserTimelineComponent
   ],
   imports: [
     BrowserModule,

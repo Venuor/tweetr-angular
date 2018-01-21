@@ -1,0 +1,13 @@
+<app-center>
+  <app-navigation></app-navigation>
+
+  <section class="ui grid" style="margin-top: 5px;">
+    <div class="ui four wide column">
+      <app-usercard *ngIf="user" [user]="user" ></app-usercard>
+    </div>
+    <div class="ui twelve wide column" *ngIf="user">
+      <app-timeline [tweets]="tweets" [title]="user.displayname + '\'s Timeline'" icon="comments">
+      </app-timeline>
+    </div>
+  </section>
+</app-center>

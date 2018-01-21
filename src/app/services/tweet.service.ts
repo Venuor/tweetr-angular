@@ -19,6 +19,13 @@ export class TweetService {
     return this.http.get<Tweet[]>(ApiSettings.API_HOST + '/api/tweets/' + username);
   }
 
+  getTweetsForTimeline(username: string) {
+    return this.http.get<Tweet[]>(
+      ApiSettings.API_HOST + '/api/tweets/' + username + '/timeline',
+      { headers: this.getAuthHeader() }
+      );
+  }
+
   postTweet(data: FormData): Promise<any> {
     return this.http.post(
       ApiSettings.API_HOST + '/api/tweets',
