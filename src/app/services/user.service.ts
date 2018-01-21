@@ -64,7 +64,7 @@ export class UserService {
           .catch(error => this.handleError(error));
       }
     } else {
-      return Promise.resolve(null);
+      return Promise.reject(null);
     }
   }
 
