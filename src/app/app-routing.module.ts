@@ -6,6 +6,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline.component';
 import { UserComponent } from './pages/user/user.component';
 import { UserTimelineComponent } from './pages/user-timeline/user-timeline.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,13 @@ const routes: Routes = [
     component: UserTimelineComponent,
     data: {
       title: 'Tweetr'
+    }
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    data: {
+      title: 'Tweetr - SettingType'
     }
   }
 ];

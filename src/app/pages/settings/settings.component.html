@@ -1,0 +1,158 @@
+<app-center>
+  <app-navigation></app-navigation>
+
+  <section class="ui grid" *ngIf="user" style="margin-top: 5px;">
+    <div class="ui four wide column">
+      <app-usercard [user]="user" ></app-usercard>
+    </div>
+
+    <main class="ui twelve wide column">
+      <section class="ui segments">
+        <article class="ui segment">
+          <h2><i class="circular {{icon}} icon"></i> {{title}}</h2>
+        </article>
+
+        <article class="ui segment">
+          <button class="ui right labeled icon button" *ngIf="!showPassword;else showSettingsButton" (click)="switchSettings()">
+            Change Password
+            <i class="key icon"></i>
+          </button>
+          <ng-template #showSettingsButton>
+            <button class="ui left labeled icon button" (click)="switchSettings()">
+              General Settings
+              <i class="setting icon"></i>
+            </button>
+          </ng-template>
+        </article>
+
+        <article class="ui segment" *ngIf="successMessage">
+          <div class="ui icon success message">
+            <i class="checkmark icon"></i>
+            <div class="content">
+              {{successMessage}}
+            </div>
+          </div>
+        </article>
+
+        <article class="ui segment" *ngIf="!showPassword">
+          <div class="ui error message" *ngIf="isGeneralFormInvalid() || generalMessage">
+            <ul class="list">
+              <li *ngIf="generalMessage">{{generalMessage}}</li>
+              <li *ngIf="isGeneralFieldInvalid('displayname')">The display name is invalid!</li>
+              <li *ngIf="isGeneralFieldInvalid('email')">The email address is invalid!</li>
+              <li *ngIf="isGeneralFieldInvalid('description')">The username is invalid!</li>
+            </ul>
+          </div>
+          <form class="ui form" [formGroup]="generalForm" (submit)="submitGeneral()" novalidate>
+            <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('displayname')}">
+              <label>Display name</label>
+              <input class="ui input" type="text" formControlName="displayname" />
+            </div>
+            <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('email')} || generalMessage">
+              <label>E-Mail</label>
+              <input class="ui input" type="text" formControlName="email" />
+            </div>
+            <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('description')}">
+              <label>Description</label>
+              <textarea class="ui textarea" formControlName="description" placeholder="Description..." maxlength="140" rows="3" style="resize: none"></textarea>
+            </div>
+            <div class="ui field">
+              <label>Profile picture</label>
+              <div class="ui six wide column">
+                <label for="image-input" class="ui button">Choose File</label>
+                <input type="file" #image id="image-input" (change)="updateFileDisplay($event)" style="display: none" />
+                <span>{{fileName}}</span>
+              </div>
+            </div>
+            <div class="ui field">
+              <div class="ui checkbox">
+                <input id="default-image" formControlName="resetImage" type="checkbox" />
+                <label for="default-image">Reset to default image</label>
+              </div>
+            </div>
+            <div class="ui buttons">
+              <input type="submit" value="Save Changes" class="ui primary button" [disabled]="generalForm.pristine || generalForm.invalid" />
+              <input type="button" value="Cancel" class="ui negative button" (click)="setGeneralFormValues()" [disabled]="generalForm.pristine" />
+            </div>
+          </form>
+        </article>
+
+        <article class="ui segment" *ngIf="showPassword">
+          <div class="ui error message" *ngIf="isPasswordFormInvalid()">
+            <ul class="list">
+              <li *ngIf="isPasswordFieldInvalid('password')">The password is invalid!</li>
+              <li *ngIf="isPasswordFieldInvalid('passwordConfirm')">The confirm password is invalid!</li>
+              <li *ngIf="isPasswordMismatch()">The passwords do not match!</li>
+            </ul>
+          </div>
+
+          <form [formGroup]="passwordForm" (submit)="submitPassword()" class="ui form">
+            <div class="ui field" [ngClass]="{error: isPasswordFieldInvalid('password') || isPasswordMismatch()}">
+              <label>New Password</label>
+              <input class="ui input" type="password" formControlName="password" />
+            </div>
+            <div class="ui field" [ngClass]="{error: isPasswordFieldInvalid('passwordConfirm') || isPasswordMismatch()}">
+              <label>New Password (repeated)</label>
+              <input class="ui input" type="password" formControlName="passwordConfirm" />
+            </div>
+            <div class="ui buttons">
+              <input type="submit" value="Save Changes" class="ui primary button" [disabled]="passwordForm.pristine || passwordForm.invalid" />
+              <input type="reset" value="Cancel" class="ui negative button" [disabled]="passwordForm.pristine" />
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <section>
+        <article class="ui top attached icon red message">
+          <i class="icon warning sign"></i>
+          <div class="content">
+            <div class="header">
+              Danger Zone
+              <button type="button" class="ui right floated red button" (click)="switchDangerZone()">
+                <i class="{{dangerIcon}} icon"></i>{{dangerButton}}
+              </button>
+            </div>
+            These settings are dangerous for your account! Be careful!
+          </div>
+        </article>
+        <article class="ui attached segment" [ngClass]="{disabled: dangerZoneDisabled}">
+          <div class="ui fluid container grid">
+            <div class="row">
+              <button type="button" class="ui red button"
+                      [disabled]="dangerZoneDisabled || (dangerousAction && dangerousAction != SettingType.deleteTweets)"
+                      [ngClass]="{basic: dangerousAction != SettingType.deleteTweets}"
+                      (click)="setDangerousAction(SettingType.deleteTweets)">
+                <i class="trash outline icon"></i>
+                Delete All Tweets
+              </button>
+              <div style="display: table; height: 100%; text-align: center;">
+                <span style="display: table-cell; vertical-align: middle;">
+                  Permanently removes all Tweets written by this account.
+                  This cannot be undone!
+                </span>
+              </div>
+            </div>
+            <div >
+              <div class="row" >
+                <div class="ui small header">
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="ui bottom attached segment" *ngIf="dangerousAction">
+          <div class="ui small header">
+            Are you sure to continue this action?
+          </div>
+          <div class="ui buttons">
+            <button type="button" class="ui secondary button" (click)="doDangerousAction()">Confirm</button>
+            <button type="button" class="ui button" (click)="resetDangerousAction()">Cancel</button>
+          </div>
+        </article>
+      </section>
+    </main>
+  </section>
+</app-center>

@@ -52,20 +52,40 @@ export class UserService {
       if (this.user) {
         return Promise.resolve(this.user);
       } else {
-        return this.http.get<User>(
-          ApiSettings.API_HOST + '/api/user',
-          { headers: this.getAuthHeader() }
-          )
-          .toPromise()
-          .then(user => {
-            this.user = user;
-            return user;
-          })
-          .catch(error => this.handleError(error));
+        return this.reloadLoggedInUser();
       }
     } else {
       return Promise.reject(null);
     }
+  }
+
+  public reloadLoggedInUser(): Promise<User> {
+    return this.http.get<User>(
+      ApiSettings.API_HOST + '/api/user',
+      { headers: this.getAuthHeader() }
+    )
+      .toPromise()
+      .then(user => {
+        this.user = user;
+        return user;
+      })
+      .catch(error => this.handleError(error));
+  }
+
+  public changeSettings(username: string, data: FormData): Promise<any> {
+    return this.http.put(
+      ApiSettings.API_HOST + '/api/user/' + username,
+      data,
+      { headers: this.getAuthHeader() }
+    ).toPromise();
+  }
+
+  public changePassword(username: string, data: FormData): Promise<any> {
+    return this.http.post(
+      ApiSettings.API_HOST + '/api/user/' + username + '/password',
+      data,
+      { headers: this.getAuthHeader() }
+    ).toPromise();
   }
 
   public logout() {

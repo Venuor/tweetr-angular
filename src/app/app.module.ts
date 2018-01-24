@@ -22,6 +22,7 @@ import { UserComponent } from './pages/user/user.component';
 import { UserService } from './services/user.service';
 import { UsercardComponent } from './components/usercard/usercard.component';
 import { UserTimelineComponent } from './pages/user-timeline/user-timeline.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserTimelineComponent } from './pages/user-timeline/user-timeline.compo
     TimelineComponent,
     UserComponent,
     UsercardComponent,
-    UserTimelineComponent
+    UserTimelineComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

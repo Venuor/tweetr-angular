@@ -46,6 +46,13 @@ export class TweetService {
       .toPromise();
   }
 
+  removeAll(username: string): Promise<any> {
+    return this.http.delete(
+      ApiSettings.API_HOST + '/api/tweets/' + username,
+      { headers: this.getAuthHeader() }
+      ).toPromise();
+  }
+
   public getAuthHeader(): HttpHeaders {
     const headers = new HttpHeaders();
     return headers.append('Authorization', this.localStorageService.getJwtToken());
