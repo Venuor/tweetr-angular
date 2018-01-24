@@ -7,11 +7,14 @@ import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline
 import { UserComponent } from './pages/user/user.component';
 import { UserTimelineComponent } from './pages/user-timeline/user-timeline.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
+import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: IndexComponent,
+    canActivate: [UnauthenticatedGuard],
     data: {
       title: 'Tweetr'
     }
@@ -19,6 +22,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [UnauthenticatedGuard],
     data: {
       title: 'Tweetr - Login'
     }
@@ -26,6 +30,7 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [UnauthenticatedGuard],
     data: {
       title: 'Tweetr - Signup'
     }
@@ -47,6 +52,7 @@ const routes: Routes = [
   {
     path: 'timeline',
     component: UserTimelineComponent,
+    canActivate: [AuthenticatedGuard],
     data: {
       title: 'Tweetr'
     }
@@ -54,6 +60,7 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [AuthenticatedGuard],
     data: {
       title: 'Tweetr - SettingType'
     }

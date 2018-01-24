@@ -23,6 +23,8 @@ import { UserService } from './services/user.service';
 import { UsercardComponent } from './components/usercard/usercard.component';
 import { UserTimelineComponent } from './pages/user-timeline/user-timeline.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
+import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { SettingsComponent } from './pages/settings/settings.component';
     ValidatorService,
     SignupService,
     TweetService,
-    UserService
+    UserService,
+    UnauthenticatedGuard,
+    AuthenticatedGuard
   ],
   bootstrap: [AppComponent]
 })
