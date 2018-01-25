@@ -7,6 +7,7 @@ export class User {
               public description: string,
               public subscribers: string[],
               public image: string,
-              public subscriptions: string[]
+              public subscriptions: string[],
+              public isAdmin: boolean,
   ) {}
 }

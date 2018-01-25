@@ -110,6 +110,8 @@ export class SettingsComponent implements OnInit {
         this.setSuccessMessage('Settings changed successfully!');
       })
       .catch(error => this.generalMessage = error.message);
+
+    this.generalForm.markAsPristine();
   }
 
   isPasswordMismatch(): boolean {

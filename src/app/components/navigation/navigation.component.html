@@ -8,6 +8,7 @@
     <ng-container *ngIf="user;else notLoggedIn">
       <a class="item" routerLink="/user/{{user.username}}"><i class="home icon"></i> Home</a>
       <a class="item" routerLink="/timeline"><i class="feed icon"></i> Timeline</a>
+      <a class="item" routerLink="/admin" *ngIf="user.isAdmin"><i class="legal icon"></i>Administration</a>
       <a class="item" routerLink="/settings" title="Settings"><i class="setting icon" style="margin: 0"></i></a>
       <a class="item" routerLink="/login" (click)="signout()" title="Sign out"><i class="sign out icon" style="margin: 0"></i></a>
     </ng-container>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Tweet } from '../model/tweet';
 import { Observable } from 'rxjs/Observable';
 import { ApiSettings } from '../model/api-settings';
@@ -36,12 +36,14 @@ export class TweetService {
   }
 
   deleteTweet(id: string): Promise<any> {
-    return this.http.request(
-      'delete',
+    let params = new HttpParams();
+    params = params.append('tweets', id);
+
+    return this.http.delete(
       ApiSettings.API_HOST + '/api/tweets',
       {
         headers: this.getAuthHeader(),
-        body: { tweet: id }
+        params: params
       })
       .toPromise();
   }
@@ -51,6 +53,19 @@ export class TweetService {
       ApiSettings.API_HOST + '/api/tweets/' + username,
       { headers: this.getAuthHeader() }
       ).toPromise();
+  }
+
+  removeBulk(tweets: string[]) {
+    let params = new HttpParams();
+    params = params.append('tweets', tweets.toString());
+
+    return this.http.delete(
+      ApiSettings.API_HOST + '/api/tweets',
+      {
+        headers: this.getAuthHeader(),
+        params: params
+      })
+      .toPromise();
   }
 
   public getAuthHeader(): HttpHeaders {

@@ -1,0 +1,161 @@
+<app-center>
+  <app-navigation></app-navigation>
+
+  <section class="ui stackable grid" style="margin-top: 5px;">
+    <div class="row">
+      <div class="ui four wide column">
+        <article class="ui segment" style="height: 100%">
+          <h2>Global Metrics</h2>
+          <div class="ui four horizontal statistics" *ngIf="globalStatistic">
+            <div class="statistic">
+              <div class="value">
+                {{globalStatistic.tweets}}
+              </div>
+              <div class="label">
+                Tweets
+              </div>
+            </div>
+            <div class="statistic">
+              <div class="value">
+                {{globalStatistic.imageTweets}}%
+              </div>
+              <div class="label">
+                Image Tweets
+              </div>
+            </div>
+            <div class="statistic">
+              <div class="value">
+                {{globalStatistic.characters}}
+              </div>
+              <div class="label">
+                Characters used
+              </div>
+            </div>
+            <div class="statistic">
+              <div class="value">
+                {{globalStatistic.users}}
+              </div>
+              <div class="label">
+                Users
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="ui twelve wide column">
+        <article class="ui segment" style="height: 100%">
+          <div class="ui stackable grid" style="height: 100%;">
+            <div class="ui ten wide column">
+              <h2>User Deletion</h2>
+              <div class="ui middle aligned relaxed divided list" *ngIf="users">
+                <div class="item" *ngFor="let user of users">
+                  <div class="right floated content">
+                    <button type="button" class="ui small red button"
+                            [ngClass]="{basic: !addedToRemoveUsers(user.username)}"
+                            (click)="addOrRemoveUsers(user.username)">
+                      <i class="trash outline icon"></i>Delete
+                    </button>
+                  </div>
+                  <img class="ui avatar image" [src]="getImageUrl(user.image)" />
+                  <div class="content">
+                    <div class="header">
+                      {{user.displayname}}
+                    </div>
+                    <div class="description">
+                      <i class="at icon"></i>{{user.username}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui six wide column">
+              <h2>Deletion Metrics</h2>
+              <div class="ui two statistics">
+                <div class="statistic">
+                  <div class="value">
+                    {{removeUsers.length}}
+                  </div>
+                  <div class="label">
+                    Users <br>
+                    Selected
+                  </div>
+                </div>
+                <div class="statistic">
+                  <div class="value">
+                    {{removeUsersStatistic.tweets}}
+                  </div>
+                  <div class="label">
+                    Tweets <br>
+                    to remove
+                  </div>
+                </div>
+                <div class="statistic">
+                  <div class="value">
+                    {{removeUsersStatistic.imageTweets}}
+                  </div>
+                  <div class="label">
+                    Posted images<br>
+                    to remove
+                  </div>
+                </div>
+                <div class="statistic">
+                  <div class="value">
+                    {{removeUsersStatistic.characters}}
+                  </div>
+                  <div class="label">
+                    Characters <br>
+                    retreived
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 2em;">
+                <div class="ui buttons" style="width: 100%;">
+                  <button type="button" class="ui orange button" [disabled]="removeUsers.length === 0"
+                          (click)="removeSelectedUsers()">
+                    Confirm
+                  </button>
+                  <button type="button" class="ui button" [disabled]="removeUsers.length === 0"
+                          (click)="cancelRemoveUsers()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="ui ten wide column">
+        <app-timeline [isAdminDashboard]="true" *ngIf="tweets"
+                      [tweets]="tweets" [formGroup]="tweetRemovalForm">
+          <div class="ui segment">
+            <div class="ui stacking grid">
+              <div class="eight wide left floated column">
+                <h2>Tweet Removal</h2>
+              </div>
+              <div class="eight wide right floated column">
+                <button type="button" class="ui small red left labeled right floated icon button"
+                        (click)="removeSelectedTweets()">
+                  <i class="trash outline icon"></i>
+                  Remove Selected Tweets
+                </button>
+              </div>
+            </div>
+          </div>
+        </app-timeline>
+      </div>
+
+      <div class="ui six wide column">
+        <div class="ui segment">
+          <h2>User Creation</h2>
+          <app-signup (submitEvent)="onUserCreation()"></app-signup>
+        </div>
+      </div>
+    </div>
+  </section>
+</app-center>

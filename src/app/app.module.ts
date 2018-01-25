@@ -11,7 +11,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageService } from './services/local-storage.service';
-import { SignupComponent } from './pages/signup/signup.component';
+import { SignupPageComponent } from './pages/signup/signup-page.component';
 import { ValidatorService } from './services/validator.service';
 import { SignupService } from './services/signup.service';
 import { GlobalTimelineComponent } from './pages/global-timeline/global-timeline.component';
@@ -25,6 +25,10 @@ import { UserTimelineComponent } from './pages/user-timeline/user-timeline.compo
 import { SettingsComponent } from './pages/settings/settings.component';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
+import { AdminComponent } from './pages/admin/admin.component';
+import { AdminGuard } from './guards/admin.guard';
+import { StatisticsService } from './services/statistics.service';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +38,15 @@ import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
     CenterComponent,
     LoginComponent,
     NavigationComponent,
-    SignupComponent,
+    SignupPageComponent,
     GlobalTimelineComponent,
     TimelineComponent,
     UserComponent,
     UsercardComponent,
     UserTimelineComponent,
-    SettingsComponent
+    SettingsComponent,
+    AdminComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -55,8 +61,10 @@ import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
     SignupService,
     TweetService,
     UserService,
+    StatisticsService,
     UnauthenticatedGuard,
-    AuthenticatedGuard
+    AuthenticatedGuard,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })

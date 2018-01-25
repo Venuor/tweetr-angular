@@ -1,0 +1,37 @@
+<div class="ui error message" *ngIf="isFormInvalid() || message">
+  <div class="header">
+    Invalid input in signup form!
+  </div>
+  <ul class="list">
+    <li *ngIf="message">{{message}}</li>
+    <li *ngIf="isFieldInvalid('username')">The username is invalid!</li>
+    <li *ngIf="isFieldInvalid('displayname')">The display name is invalid!</li>
+    <li *ngIf="isFieldInvalid('password')">The password is invalid!</li>
+    <li *ngIf="isFieldInvalid('passwordConfirm')">The confirm password is invalid!</li>
+    <li *ngIf="isPasswordMismatch()">The passwords do not match!</li>
+    <li *ngIf="isFieldInvalid('email')">The email address is invalid!</li>
+  </ul>
+</div>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
+  <div class="field" [ngClass]="{error: isFieldInvalid('username') || message}">
+    <label>Username</label>
+    <input type="text" formControlName="username" placeholder="Username" />
+  </div>
+  <div class="field" [ngClass]="{error: isFieldInvalid('displayname')}">
+    <label>Display name</label>
+    <input type="text" formControlName="displayname" placeholder="Display name" />
+  </div>
+  <div class="field" [ngClass]="{error: isFieldInvalid('password') || isPasswordMismatch()}">
+    <label>Password</label>
+    <input type="password" formControlName="password" placeholder="Password" />
+  </div>
+  <div class="field" [ngClass]="{error: isFieldInvalid('passwordConfirm') || isPasswordMismatch()}">
+    <label>Password (repeated)</label>
+    <input type="password" formControlName="passwordConfirm" placeholder="Password (repeated)" />
+  </div>
+  <div class="field" [ngClass]="{error: isFieldInvalid('email') || message}">
+    <label>E-Mail</label>
+    <input type="text" formControlName="email" placeholder="E-Mail" />
+  </div>
+  <input type="submit" class="ui orange button" value="Sign up" [disabled]="signupForm.invalid" style="width: 100%;" />
+</form>

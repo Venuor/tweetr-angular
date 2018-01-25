@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ApiSettings } from '../model/api-settings';
 import { User } from '../model/user';
 import { LocalStorageService } from './local-storage.service';
@@ -25,6 +25,11 @@ export class UserService {
 
   getUser(username: string) {
     return this.http.get<User>(ApiSettings.API_HOST + '/api/user/' + username);
+  }
+
+  public getAll() {
+    return this.http.get<User[]>(ApiSettings.API_HOST + '/api/users')
+      .toPromise();
   }
 
   public subscribe(username: string): Promise<any> {
@@ -90,6 +95,16 @@ export class UserService {
 
   public logout() {
     this.resetStoredValues();
+  }
+
+  public removeUsers(users: string[]) {
+    let params = new HttpParams();
+    params = params.append('users', users.toString());
+
+    return this.http.delete(
+      ApiSettings.API_HOST + '/api/users',
+      { headers: this.getAuthHeader(), params:  params }
+      ).toPromise();
   }
 
   private getAuthHeader(): HttpHeaders {
