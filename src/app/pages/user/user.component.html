@@ -10,7 +10,7 @@
       <app-timeline (removeEvent)="removeTweet($event)" [tweets]="tweets" [title]="user.displayname + '\'s Tweets'" [showRemove]="showRemove" icon="comment">
         <article class="ui clearing segment" *ngIf="!showButton && loggedInUser">
           <form [formGroup]="tweetForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
-            <textarea rows="3" placeholder="Tweet..." maxlength="140" formControlName="text" style="resize: none"></textarea>
+            <textarea rows="3" placeholder="Tweet... (max. 140 chars)" maxlength="140" formControlName="text" style="resize: none"></textarea>
             <div class="ui bottom right attached label" style="font-size: 1em;">
               {{tweetForm.get('text').value.length}} / 140
             </div>

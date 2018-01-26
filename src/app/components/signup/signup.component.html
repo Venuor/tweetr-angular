@@ -19,7 +19,7 @@
       <div class="ui label">
         <i class="at icon" style="margin: 0"></i>
       </div>
-      <input type="text" formControlName="username" placeholder="Username" />
+      <input type="text" formControlName="username" placeholder='e.g.: "johndoe" (4 - 20 alphanumeric chars)' />
     </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('displayname')}">
@@ -28,7 +28,7 @@
       <div class="ui label">
         <i class="user icon" style="margin: 0"></i>
       </div>
-      <input type="text" formControlName="displayname" placeholder="Display name" />
+      <input type="text" formControlName="displayname" placeholder='e.g.: "Mr. Doe" (4 - 40 chars)' />
     </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('password') || isPasswordMismatch()}">
@@ -37,7 +37,7 @@
       <div class="ui label">
         <i class="lock icon" style="margin: 0"></i>
       </div>
-      <input type="password" formControlName="password" placeholder="Password" />
+      <input type="password" formControlName="password" placeholder='e.g.: "YourSecret" (8 - 40 chars)' />
     </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('passwordConfirm') || isPasswordMismatch()}">
@@ -46,7 +46,7 @@
       <div class="ui label">
         <i class="lock icon" style="margin: 0"></i>
       </div>
-      <input type="password" formControlName="passwordConfirm" placeholder="Password (repeated)" />
+      <input type="password" formControlName="passwordConfirm" placeholder="Same as Password" />
     </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('email') || message}">
@@ -55,7 +55,7 @@
       <div class="ui label">
         <i class="mail icon" style="margin: 0"></i>
       </div>
-      <input type="text" formControlName="email" placeholder="E-Mail" />
+      <input type="text" formControlName="email" placeholder='e.g.: "someone@example.com"' />
     </div>
   </div>
   <input type="submit" class="ui orange button" value="Sign up" [disabled]="signupForm.invalid" style="width: 100%;" />

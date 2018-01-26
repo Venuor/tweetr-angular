@@ -78,7 +78,7 @@
                 <div class="ui label">
                   <i class="user icon" style="margin: 0"></i>
                 </div>
-                <input class="ui input" type="text" formControlName="displayname" />
+                <input class="ui input" type="text" formControlName="displayname" placeholder='e.g.: "Mr. Doe" (4 - 40 chars)' />
               </div>
             </div>
             <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('email')} || generalMessage">
@@ -87,13 +87,14 @@
                 <div class="ui label">
                   <i class="mail icon" style="margin: 0"></i>
                 </div>
-                <input class="ui labeled input" type="text" formControlName="email" />
+                <input class="ui labeled input" type="text" formControlName="email" placeholder='e.g.: "someone@example.com"' />
               </div>
             </div>
             <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('description')}">
               <label>Description</label>
               <div class="ui labeled input">
-                <textarea class="ui textarea" formControlName="description" placeholder="Description..." maxlength="140" rows="3" style="resize: none"></textarea>
+                <textarea class="ui textarea" formControlName="description" maxlength="140" rows="3"
+                          placeholder="Description... (max. 140 chars)" style="resize: none"></textarea>
                 <div class="ui bottom right attached label" style="font-size: 1em;">
                   {{generalForm.get('description').value.length}} / 140
                 </div>
@@ -137,7 +138,7 @@
                 <div class="ui label">
                   <i class="lock icon" style="margin: 0"></i>
                 </div>
-                <input class="ui input" type="password" formControlName="password" />
+                <input class="ui input" type="password" formControlName="password" placeholder='e.g.: "YourSecret" (8 - 40 chars)' />
               </div>
             </div>
             <div class="ui field" [ngClass]="{error: isPasswordFieldInvalid('passwordConfirm') || isPasswordMismatch()}">
@@ -146,7 +147,7 @@
                 <div class="ui label">
                   <i class="lock icon" style="margin: 0"></i>
                 </div>
-                <input class="ui input" type="password" formControlName="passwordConfirm" />
+                <input class="ui input" type="password" formControlName="passwordConfirm" placeholder="Same as Password" />
               </div>
             </div>
             <div class="ui buttons">
