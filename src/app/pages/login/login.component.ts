@@ -11,22 +11,32 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   message: string;
+  processing: boolean;
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
     this.createForm();
+    this.processing = false;
   }
 
   ngOnInit() {
   }
 
   onSubmit() {
+    if (this.processing) {
+      return;
+    }
+
+    this.processing = true;
+
     this.userService.login(
       this.loginForm.get('username').value,
       this.loginForm.get('password').value
     ).then(success => {
       this.router.navigate(['/user/' + this.loginForm.get('username').value]);
+      this.processing = false;
     }).catch(error => {
       this.message = 'Username or password wrong!';
+      this.processing = false;
     });
   }
 

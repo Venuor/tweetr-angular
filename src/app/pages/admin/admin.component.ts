@@ -20,9 +20,11 @@ export class AdminComponent implements OnInit {
 
   removeUsers: string[];
   removeUsersStatistic: Statistic;
+  removeUsersProcessing: boolean;
 
   tweets: Tweet[];
   tweetRemovalForm: FormGroup;
+  tweetRemovalProcessing: boolean;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -36,6 +38,9 @@ export class AdminComponent implements OnInit {
     this.removeUsers = [];
     this.globalStatistic = new Statistic(0, 0, 0, 0);
     this.removeUsersStatistic = new Statistic(0, 0, 0, 0);
+
+    this.removeUsersProcessing = false;
+    this.tweetRemovalProcessing = false;
 
     this.loadUsers();
     this.updateStatistic();
@@ -71,21 +76,41 @@ export class AdminComponent implements OnInit {
   }
 
   cancelRemoveUsers() {
+    if (this.removeUsersProcessing) {
+      return;
+    }
+
     this.removeUsers = [];
     this.removeUsersStatistic = new Statistic(0, 0, 0, 0);
   }
 
   removeSelectedUsers() {
+    if (this.removeUsersProcessing) {
+      return;
+    }
+
+    this.removeUsersProcessing = true;
+
     this.userService.removeUsers(this.removeUsers)
       .then(result => {
         this.updateStatistic();
         this.loadUsers();
         this.cancelRemoveUsers();
         this.initRemovalForm();
-      }).catch(error => console.log(error));
+        this.removeUsersProcessing = false;
+      }).catch(error => {
+        console.log(error);
+        this.removeUsersProcessing = false;
+      });
   }
 
   removeSelectedTweets() {
+    if (this.tweetRemovalProcessing) {
+      return;
+    }
+
+    this.tweetRemovalProcessing = true;
+
     const tweets = [];
     Object.keys(this.tweetRemovalForm.controls).forEach(key => {
       if (this.tweetRemovalForm.get(key).value) {
@@ -99,7 +124,11 @@ export class AdminComponent implements OnInit {
           this.updateStatistic();
           this.initRemovalForm();
           this.updateRemoveUserStatistic();
-        }).catch(error => console.log(error));
+          this.tweetRemovalProcessing = false;
+        }).catch(error => {
+          console.log(error);
+          this.tweetRemovalProcessing = false;
+      });
     }
   }
 

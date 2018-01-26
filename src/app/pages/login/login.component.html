@@ -33,7 +33,10 @@
               <input type="password" formControlName="password" placeholder="Password" />
             </div>
           </div>
-          <input type="submit" class="ui orange button" value="Login" [disabled]="loginForm.pristine && !isUsernameInvalid() && !isPasswordInvalid()" />
+          <button type="submit" class="ui orange button" style="width: 100%;" [ngClass]="{loading: processing}"
+                  [disabled]="loginForm.invalid">
+            Login
+          </button>
         </form>
       </div>
     </section>

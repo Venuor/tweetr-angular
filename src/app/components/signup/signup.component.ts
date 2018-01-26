@@ -14,6 +14,8 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   message: string;
 
+  processing: boolean;
+
   constructor(
     private validatorService: ValidatorService,
     private signupService: SignupService,
@@ -24,6 +26,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.processing = false;
   }
 
   isFieldInvalid(name: string): boolean {
@@ -88,6 +91,12 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.processing) {
+      return;
+    }
+
+    this.processing = true;
+
     this.signupService.signup(
       this.signupForm.get('username').value,
       this.signupForm.get('displayname').value,
@@ -97,9 +106,12 @@ export class SignupComponent implements OnInit {
     ).then(user => {
       this.signupForm.reset();
       this.submitEvent.emit();
+      this.message = '';
+      this.processing = false;
     }).catch(err => {
       console.log(err);
       this.message = err.error.message;
+      this.processing = false;
     });
   }
 }

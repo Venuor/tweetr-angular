@@ -1,7 +1,4 @@
 <div class="ui error message" *ngIf="isFormInvalid() || message">
-  <div class="header">
-    Invalid input in signup form!
-  </div>
   <ul class="list">
     <li *ngIf="message">{{message}}</li>
     <li *ngIf="isFieldInvalid('username')">The username is invalid!</li>
@@ -58,5 +55,5 @@
       <input type="text" formControlName="email" placeholder='e.g.: "someone@example.com"' />
     </div>
   </div>
-  <input type="submit" class="ui orange button" value="Sign up" [disabled]="signupForm.invalid" style="width: 100%;" />
+  <button type="submit" class="ui orange button" [ngClass]="{loading: processing}" [disabled]="signupForm.invalid" style="width: 100%;">Sign up</button>
 </form>

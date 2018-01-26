@@ -116,8 +116,12 @@
               </div>
             </div>
             <div class="ui buttons">
-              <input type="submit" value="Save Changes" class="ui primary button" [disabled]="generalForm.pristine || generalForm.invalid" />
-              <input type="button" value="Cancel" class="ui negative button" (click)="setGeneralFormValues()" [disabled]="generalForm.pristine" />
+              <button type="submit" class="ui orange button" [ngClass]="{loading: generalProcessing}"
+                      [disabled]="generalForm.pristine || generalForm.invalid">
+                Save Changes
+              </button>
+              <input type="button" value="Cancel" class="ui button" (click)="setGeneralFormValues()"
+                     [disabled]="generalForm.pristine || generalProcessing" />
             </div>
           </form>
         </article>
@@ -151,8 +155,12 @@
               </div>
             </div>
             <div class="ui buttons">
-              <input type="submit" value="Save Changes" class="ui primary button" [disabled]="passwordForm.pristine || passwordForm.invalid" />
-              <input type="reset" value="Cancel" class="ui negative button" [disabled]="passwordForm.pristine" />
+              <button type="submit" class="ui orange button" [ngClass]="{loading: passwordProcessing}"
+                      [disabled]="passwordForm.pristine || passwordForm.invalid">
+                Save Changes
+              </button>
+              <input type="reset" value="Cancel" class="ui button"
+                     [disabled]="passwordForm.pristine || passwordProcessing" />
             </div>
           </form>
         </article>
@@ -175,7 +183,7 @@
           <div class="ui fluid container grid">
             <div class="row">
               <button type="button" class="ui red button"
-                      [disabled]="dangerZoneDisabled || (dangerousAction && dangerousAction != SettingType.deleteTweets)"
+                      [disabled]="dangerZoneDisabled || (dangerousAction && dangerousAction != SettingType.deleteTweets) || dangerProcessing"
                       [ngClass]="{basic: dangerousAction != SettingType.deleteTweets}"
                       (click)="setDangerousAction(SettingType.deleteTweets)">
                 <i class="trash outline icon"></i>
@@ -195,7 +203,10 @@
             Are you sure to continue this action?
           </div>
           <div class="ui buttons">
-            <button type="button" class="ui secondary button" (click)="doDangerousAction()">Confirm</button>
+            <button type="button" class="ui secondary button" (click)="doDangerousAction()"
+                    [ngClass]="{loading: dangerProcessing}">
+              Confirm
+            </button>
             <button type="button" class="ui button" (click)="resetDangerousAction()">Cancel</button>
           </div>
         </article>

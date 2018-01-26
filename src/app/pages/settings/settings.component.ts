@@ -23,14 +23,17 @@ export class SettingsComponent implements OnInit {
   generalForm: FormGroup;
   fileName: string;
   generalMessage: string;
+  generalProcessing: boolean;
 
   passwordForm: FormGroup;
+  passwordProcessing: boolean;
 
   dangerButton: string;
   dangerIcon: string;
   dangerZoneDisabled: boolean;
   dangerousAction: SettingType;
   SettingType = SettingType;
+  dangerProcessing: boolean;
 
   userStatistic: Statistic;
 
@@ -50,10 +53,14 @@ export class SettingsComponent implements OnInit {
     this.icon = 'settings';
     this.title = 'General Settings';
 
+    this.generalProcessing = false;
+    this.passwordProcessing = false;
+
     this.dangerZoneDisabled = true;
     this.dangerButton = 'Enable';
     this.dangerIcon = 'unlock';
     this.dangerousAction = null;
+    this.dangerProcessing = false;
   }
 
   updateFileDisplay($event) {
@@ -93,7 +100,12 @@ export class SettingsComponent implements OnInit {
   }
 
   submitGeneral() {
+    if (this.generalProcessing) {
+      return;
+    }
+
     this.generalMessage = null;
+    this.generalProcessing = true;
 
     let image = null;
 
@@ -113,10 +125,13 @@ export class SettingsComponent implements OnInit {
       .then(user => {
         this.user = user;
         this.setSuccessMessage('Settings changed successfully!');
+        this.generalProcessing = false;
+        this.generalForm.markAsPristine();
       })
-      .catch(error => this.generalMessage = error.message);
-
-    this.generalForm.markAsPristine();
+      .catch(error => {
+        this.generalMessage = error.message;
+        this.generalProcessing = false;
+      });
   }
 
   isPasswordMismatch(): boolean {
@@ -143,6 +158,12 @@ export class SettingsComponent implements OnInit {
   }
 
   submitPassword() {
+    if (this.passwordProcessing) {
+      return;
+    }
+
+    this.passwordProcessing = true;
+
     const data = new FormData();
     data.append('password', this.passwordForm.get('password').value);
     data.append('passwordConfirm', this.passwordForm.get('passwordConfirm').value);
@@ -151,8 +172,12 @@ export class SettingsComponent implements OnInit {
       .then(result => {
         this.passwordForm.reset();
         this.setSuccessMessage('Password change successful!');
+        this.passwordProcessing = false;
       })
-      .catch();
+      .catch(error => {
+        console.log(error);
+        this.passwordProcessing = false;
+      });
   }
 
   switchSettings() {
@@ -190,17 +215,26 @@ export class SettingsComponent implements OnInit {
   }
 
   doDangerousAction() {
+    if (this.dangerProcessing) {
+      return;
+    }
+
+    this.dangerProcessing = true;
+
     switch (this.dangerousAction) {
       case SettingType.deleteTweets:
         this.tweetService.removeAll(this.user.username)
           .then(result => {
             this.setSuccessMessage('All Tweets successfully removed!');
             this.updateStatistic();
-          }).catch();
+            this.resetDangerousAction();
+            this.dangerProcessing = false;
+          }).catch(error => {
+            console.log(error);
+            this.dangerProcessing = false;
+          });
         break;
     }
-
-    this.resetDangerousAction();
   }
 
   private setSuccessMessage(message: string, displayTime: number = 5000) {

@@ -20,8 +20,10 @@ export class UserComponent implements OnInit, OnDestroy {
   showButton: boolean;
   isFollowing: boolean;
   showRemove: boolean;
+
   tweetForm: FormGroup;
   fileName: string;
+  tweetProcessing: boolean;
 
   private paramSubscription: Subscription;
 
@@ -34,6 +36,7 @@ export class UserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.tweetProcessing = false;
     this.tweets = [];
     this.paramSubscription = this.activatedRoute.paramMap.subscribe(params => {
       const username = params.get('username');
@@ -54,17 +57,28 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.tweetProcessing) {
+      return;
+    }
+
+    this.tweetProcessing = true;
+
     const formData = new FormData();
     formData.append('text', this.tweetForm.get('text').value);
     formData.append('image', this.tweetForm.get('image').value);
 
     this.tweetService.postTweet(formData)
       .then(result => {
-        this.tweetForm.reset();
+        this.tweetForm.get('text').setValue('');
+        this.tweetForm.get('image').reset();
         this.fileName = '';
         this.getTweets(this.user.username);
+        this.tweetProcessing = false;
       })
-      .catch(this.handleError);
+      .catch(error => {
+        this.tweetProcessing = false;
+        this.handleError(error);
+      });
   }
 
   updateUser() {
@@ -73,8 +87,12 @@ export class UserComponent implements OnInit, OnDestroy {
 
   removeTweet($event) {
     this.tweetService.deleteTweet($event)
-      .then(result => this.getTweets(this.user.username))
-      .catch(this.handleError);
+      .then(result => {
+        this.getTweets(this.user.username);
+      })
+      .catch(error => {
+        this.handleError(error);
+      });
   }
 
   private getUser(username: string) {

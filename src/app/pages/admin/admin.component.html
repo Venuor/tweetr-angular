@@ -53,7 +53,8 @@
                   <div class="right floated content">
                     <button type="button" class="ui small red button"
                             [ngClass]="{basic: !addedToRemoveUsers(user.username)}"
-                            (click)="addOrRemoveUsers(user.username)">
+                            (click)="addOrRemoveUsers(user.username)"
+                            [disabled]="removeUsersProcessing">
                       <i class="trash outline icon"></i>Delete
                     </button>
                   </div>
@@ -114,11 +115,14 @@
               <div style="margin-top: 2em;">
                 <div class="ui buttons" style="width: 100%;">
                   <button type="button" class="ui orange button" [disabled]="removeUsers.length === 0"
-                          (click)="removeSelectedUsers()">
+                          (click)="removeSelectedUsers()"
+                          [ngClass]="{loading: removeUsersProcessing}">
                     Confirm
                   </button>
-                  <button type="button" class="ui button" [disabled]="removeUsers.length === 0"
-                          (click)="cancelRemoveUsers()">
+                  <button type="button" class="ui button"
+                          [disabled]="removeUsers.length === 0 || removeUsersProcessing"
+                          (click)="cancelRemoveUsers()"
+                          [ngClass]="{loading: tweetRemovalProcessing}">
                     Cancel
                   </button>
                 </div>

@@ -42,7 +42,9 @@
             </ng-container>
             <ng-container *ngIf="showRemove">
               <div class="meta">
-                <a (click)="removeTweet(tweet.id)">Remove</a>
+                <a (click)="removeTweet(tweet.id)">
+                  <i class="trash outline icon" *ngIf="!processRemove"></i>Remove
+                </a>
               </div>
             </ng-container>
           </div>
