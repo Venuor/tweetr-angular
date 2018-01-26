@@ -5,6 +5,8 @@ import { User } from '../../model/user';
 import { UserService } from '../../services/user.service';
 import { SettingType } from './setting-type.enum';
 import { TweetService } from '../../services/tweet.service';
+import { Statistic } from '../../model/statistic';
+import { StatisticsService } from '../../services/statistics.service';
 
 @Component({
   selector: 'app-settings',
@@ -30,11 +32,14 @@ export class SettingsComponent implements OnInit {
   dangerousAction: SettingType;
   SettingType = SettingType;
 
+  userStatistic: Statistic;
+
   constructor(
     private fb: FormBuilder,
     private validatorService: ValidatorService,
     private userService: UserService,
-    private tweetService: TweetService
+    private tweetService: TweetService,
+    private statisticService: StatisticsService
   ) { }
 
   ngOnInit() {
@@ -190,6 +195,7 @@ export class SettingsComponent implements OnInit {
         this.tweetService.removeAll(this.user.username)
           .then(result => {
             this.setSuccessMessage('All Tweets successfully removed!');
+            this.updateStatistic();
           }).catch();
         break;
     }
@@ -211,6 +217,7 @@ export class SettingsComponent implements OnInit {
       .then(user => {
         this.user = user;
         this.setGeneralFormValues();
+        this.updateStatistic();
       })
       .catch(err => console.log(err));
   }
@@ -251,6 +258,17 @@ export class SettingsComponent implements OnInit {
       {
         validator: this.validatorService.matchPassword()
       });
+  }
+
+  private updateStatistic() {
+    if (this.user) {
+      this.statisticService.getUserStatistic([this.user.username])
+        .then(statistic => {
+          const imagePercent = statistic.imageTweets / (statistic.tweets || 1);
+          statistic.imageTweets = parseFloat(imagePercent.toFixed(2)) * 100;
+          this.userStatistic = statistic;
+        }).catch(error => console.log(error));
+    }
   }
 
 }

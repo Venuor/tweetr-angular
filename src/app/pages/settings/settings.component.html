@@ -4,6 +4,34 @@
   <section class="ui grid" *ngIf="user" style="margin-top: 5px;">
     <div class="ui four wide column">
       <app-usercard [user]="user" ></app-usercard>
+      <article class="ui segment" *ngIf="userStatistic">
+        <div class="ui horizontal statistics">
+          <div class="statistic">
+            <div class="value">
+              {{userStatistic.tweets}}
+            </div>
+            <div class="label">
+              Tweets
+            </div>
+          </div>
+          <div class="statistic">
+            <div class="value">
+              {{userStatistic.imageTweets}}%
+            </div>
+            <div class="label">
+              Image Tweets
+            </div>
+          </div>
+          <div class="statistic">
+            <div class="value">
+              {{userStatistic.characters}}
+            </div>
+            <div class="label">
+              Characters used
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
 
     <main class="ui twelve wide column">
