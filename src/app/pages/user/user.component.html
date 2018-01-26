@@ -11,6 +11,9 @@
         <article class="ui clearing segment" *ngIf="!showButton && loggedInUser">
           <form [formGroup]="tweetForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
             <textarea rows="3" placeholder="Tweet..." maxlength="140" formControlName="text" style="resize: none"></textarea>
+            <div class="ui bottom right attached label" style="font-size: 1em;">
+              {{tweetForm.get('text').value.length}} / 140
+            </div>
 
             <div style="margin-top: 10px;"></div>
 

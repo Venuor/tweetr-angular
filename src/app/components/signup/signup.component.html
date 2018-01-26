@@ -15,23 +15,48 @@
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
   <div class="field" [ngClass]="{error: isFieldInvalid('username') || message}">
     <label>Username</label>
-    <input type="text" formControlName="username" placeholder="Username" />
+    <div class="ui labeled input">
+      <div class="ui label">
+        <i class="at icon" style="margin: 0"></i>
+      </div>
+      <input type="text" formControlName="username" placeholder="Username" />
+    </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('displayname')}">
     <label>Display name</label>
-    <input type="text" formControlName="displayname" placeholder="Display name" />
+    <div class="ui labeled input">
+      <div class="ui label">
+        <i class="user icon" style="margin: 0"></i>
+      </div>
+      <input type="text" formControlName="displayname" placeholder="Display name" />
+    </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('password') || isPasswordMismatch()}">
     <label>Password</label>
-    <input type="password" formControlName="password" placeholder="Password" />
+    <div class="ui labeled input">
+      <div class="ui label">
+        <i class="lock icon" style="margin: 0"></i>
+      </div>
+      <input type="password" formControlName="password" placeholder="Password" />
+    </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('passwordConfirm') || isPasswordMismatch()}">
     <label>Password (repeated)</label>
-    <input type="password" formControlName="passwordConfirm" placeholder="Password (repeated)" />
+    <div class="ui labeled input">
+      <div class="ui label">
+        <i class="lock icon" style="margin: 0"></i>
+      </div>
+      <input type="password" formControlName="passwordConfirm" placeholder="Password (repeated)" />
+    </div>
   </div>
   <div class="field" [ngClass]="{error: isFieldInvalid('email') || message}">
     <label>E-Mail</label>
-    <input type="text" formControlName="email" placeholder="E-Mail" />
+    <div class="ui labeled input">
+      <div class="ui label">
+        <i class="mail icon" style="margin: 0"></i>
+      </div>
+      <input type="text" formControlName="email" placeholder="E-Mail" />
+    </div>
   </div>
   <input type="submit" class="ui orange button" value="Sign up" [disabled]="signupForm.invalid" style="width: 100%;" />
 </form>

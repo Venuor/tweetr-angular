@@ -74,15 +74,31 @@
           <form class="ui form" [formGroup]="generalForm" (submit)="submitGeneral()" novalidate>
             <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('displayname')}">
               <label>Display name</label>
-              <input class="ui input" type="text" formControlName="displayname" />
+              <div class="ui labeled input">
+                <div class="ui label">
+                  <i class="user icon" style="margin: 0"></i>
+                </div>
+                <input class="ui input" type="text" formControlName="displayname" />
+              </div>
             </div>
             <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('email')} || generalMessage">
               <label>E-Mail</label>
-              <input class="ui input" type="text" formControlName="email" />
+              <div class="ui labeled input">
+                <div class="ui label">
+                  <i class="mail icon" style="margin: 0"></i>
+                </div>
+                <input class="ui labeled input" type="text" formControlName="email" />
+              </div>
             </div>
             <div class="ui field" [ngClass]="{error: isGeneralFieldInvalid('description')}">
               <label>Description</label>
-              <textarea class="ui textarea" formControlName="description" placeholder="Description..." maxlength="140" rows="3" style="resize: none"></textarea>
+              <div class="ui labeled input">
+                <textarea class="ui textarea" formControlName="description" placeholder="Description..." maxlength="140" rows="3" style="resize: none"></textarea>
+                <div class="ui bottom right attached label" style="font-size: 1em;">
+                  {{generalForm.get('description').value.length}} / 140
+                </div>
+              </div>
+
             </div>
             <div class="ui field">
               <label>Profile picture</label>
@@ -117,11 +133,21 @@
           <form [formGroup]="passwordForm" (submit)="submitPassword()" class="ui form">
             <div class="ui field" [ngClass]="{error: isPasswordFieldInvalid('password') || isPasswordMismatch()}">
               <label>New Password</label>
-              <input class="ui input" type="password" formControlName="password" />
+              <div class="ui labeled input">
+                <div class="ui label">
+                  <i class="lock icon" style="margin: 0"></i>
+                </div>
+                <input class="ui input" type="password" formControlName="password" />
+              </div>
             </div>
             <div class="ui field" [ngClass]="{error: isPasswordFieldInvalid('passwordConfirm') || isPasswordMismatch()}">
               <label>New Password (repeated)</label>
-              <input class="ui input" type="password" formControlName="passwordConfirm" />
+              <div class="ui labeled input">
+                <div class="ui label">
+                  <i class="lock icon" style="margin: 0"></i>
+                </div>
+                <input class="ui input" type="password" formControlName="passwordConfirm" />
+              </div>
             </div>
             <div class="ui buttons">
               <input type="submit" value="Save Changes" class="ui primary button" [disabled]="passwordForm.pristine || passwordForm.invalid" />

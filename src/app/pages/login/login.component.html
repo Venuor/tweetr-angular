@@ -17,11 +17,21 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
           <div class="field" [ngClass]="{error: isUsernameInvalid()}" >
             <label>Username</label>
-            <input type="text" formControlName="username" placeholder="Username" />
+            <div class="ui labeled input">
+              <div class="ui label">
+                <i class="at icon" style="margin: 0"></i>
+              </div>
+              <input type="text" formControlName="username" placeholder="Username" />
+            </div>
           </div>
           <div class="field" [ngClass]="{error: isPasswordInvalid()}">
             <label>Password</label>
-            <input type="password" formControlName="password" placeholder="Password" />
+            <div class="ui labeled input">
+              <div class="ui label">
+                <i class="lock icon" style="margin: 0"></i>
+              </div>
+              <input type="password" formControlName="password" placeholder="Password" />
+            </div>
           </div>
           <input type="submit" class="ui orange button" value="Login" [disabled]="loginForm.pristine && !isUsernameInvalid() && !isPasswordInvalid()" />
         </form>
