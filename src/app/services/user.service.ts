@@ -65,16 +65,20 @@ export class UserService {
   }
 
   public reloadLoggedInUser(): Promise<User> {
-    return this.http.get<User>(
-      ApiSettings.API_HOST + '/api/user',
-      { headers: this.getAuthHeader() }
-    )
-      .toPromise()
-      .then(user => {
-        this.user = user;
-        return user;
-      })
-      .catch(error => this.handleError(error));
+    if (this.localStorageService.getJwtToken()) {
+      return this.http.get<User>(
+        ApiSettings.API_HOST + '/api/user',
+        {headers: this.getAuthHeader()}
+      )
+        .toPromise()
+        .then(user => {
+          this.user = user;
+          return user;
+        })
+        .catch(error => this.handleError(error));
+    } else {
+      return Promise.reject(null);
+    }
   }
 
   public changeSettings(username: string, data: FormData): Promise<any> {
@@ -113,7 +117,8 @@ export class UserService {
   }
 
   private handleError(error: any): Promise<any> {
-    if (error.error.statusCode === 401) {
+    console.error(error);
+    if (error.error && error.error.statusCode === 401) {
       this.resetStoredValues();
     }
     return Promise.reject(error.message || error);
