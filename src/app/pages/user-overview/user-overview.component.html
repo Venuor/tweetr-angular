@@ -4,8 +4,8 @@
   <section class="ui four column grid container" style="margin-top: 1em;" *ngIf="loggedInUser">
     <ng-container *ngFor="let user of users">
       <div class="column" *ngIf="user.username !== loggedInUser.username">
-        <app-usercard (followButtonEvent)="updateUsers()"
-                       [user]="user" [showButton]="true" [isFollowing]="isFollowing(user)" ></app-usercard>
+        <app-usercard (followButtonEvent)="updateUsers()" [linkToUser]="true" [showButton]="true"
+                       [user]="user" [isFollowing]="isFollowing(user)" ></app-usercard>
       </div>
     </ng-container>
   </section>

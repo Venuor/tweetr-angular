@@ -2,7 +2,12 @@
   <div class="image container" style="background-size: cover;" [style.background-image]="secureBackgroundUrl(user.image)">
   </div>
   <div class="content">
-    <span class="header">{{user.displayname}}</span>
+    <span class="header" *ngIf="!linkToUser">
+      {{user.displayname}}
+    </span>
+    <a class="header" style="text-decoration: underline;" href="/user/{{user.username}}" *ngIf="linkToUser">
+      {{user.displayname}}
+    </a>
     <div class="meta">
       <div class="ui list">
         <div class="item">

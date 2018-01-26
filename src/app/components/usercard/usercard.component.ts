@@ -13,6 +13,7 @@ export class UsercardComponent implements OnInit {
   @Input() user: User;
   @Input() showButton: boolean;
   @Input() isFollowing: boolean;
+  @Input() linkToUser: boolean;
   @Output() followButtonEvent: EventEmitter<any>;
 
   constructor(private sanitizer: DomSanitizer, private userService: UserService) {
