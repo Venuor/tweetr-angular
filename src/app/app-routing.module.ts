@@ -11,6 +11,7 @@ import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
 import { AdminComponent } from './pages/admin/admin.component';
 import { AdminGuard } from './guards/admin.guard';
+import { UserOverviewComponent } from './pages/user-overview/user-overview.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,13 @@ const routes: Routes = [
     canActivate: [AuthenticatedGuard, AdminGuard],
     data: {
       title: 'Tweetr - Administration'
+    }
+  },
+  {
+    path: 'users',
+    component: UserOverviewComponent,
+    data: {
+      title: 'Tweetr - Users'
     }
   }
 ];

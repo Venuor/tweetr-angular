@@ -29,6 +29,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AdminGuard } from './guards/admin.guard';
 import { StatisticsService } from './services/statistics.service';
 import { SignupComponent } from './components/signup/signup.component';
+import { UserOverviewComponent } from './pages/user-overview/user-overview.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SignupComponent } from './components/signup/signup.component';
     UserTimelineComponent,
     SettingsComponent,
     AdminComponent,
-    SignupComponent
+    SignupComponent,
+    UserOverviewComponent
   ],
   imports: [
     BrowserModule,
