@@ -11,4 +11,4 @@ users you are subscribed to.
 
 There also exists an admin user which can delete any user and Tweet.
 
-This app was build for educational purposes.
+This app was build for educational purposes and is hosted on [a private server](https://rspiess.ddns.net/tweetr).
