@@ -147,7 +147,7 @@ export class AdminComponent implements OnInit {
     this.statisticService.getGlobalStatistic()
       .then(statistic => {
         const imagePercent = statistic.imageTweets / (statistic.tweets || 1);
-        statistic.imageTweets = parseFloat(imagePercent.toFixed(2)) * 100;
+        statistic.imageTweets = Math.round(imagePercent * 100);
         this.globalStatistic = statistic;
       })
       .catch(error => console.log(error));

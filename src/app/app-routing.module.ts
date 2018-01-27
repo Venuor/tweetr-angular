@@ -65,7 +65,7 @@ const routes: Routes = [
     component: SettingsComponent,
     canActivate: [AuthenticatedGuard],
     data: {
-      title: 'Tweetr - SettingType'
+      title: 'Tweetr - Settings'
     }
   },
   {

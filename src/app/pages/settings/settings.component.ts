@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorService } from '../../services/validator.service';
 import { User } from '../../model/user';
@@ -24,6 +24,7 @@ export class SettingsComponent implements OnInit {
   fileName: string;
   generalMessage: string;
   generalProcessing: boolean;
+  @ViewChild('image') tweetImage: ElementRef;
 
   passwordForm: FormGroup;
   passwordProcessing: boolean;
@@ -65,6 +66,8 @@ export class SettingsComponent implements OnInit {
 
   updateFileDisplay($event) {
     const file = $event.target.files[0];
+    this.generalForm.get('image').markAsTouched();
+    this.generalForm.get('image').markAsDirty();
     if (file) {
       this.fileName = file.name;
       this.generalForm.get('image').setValue(file);
@@ -108,8 +111,7 @@ export class SettingsComponent implements OnInit {
     this.generalProcessing = true;
 
     let image = null;
-
-    if (this.generalForm.get('resetImage').value) {
+    if (!this.generalForm.get('resetImage').value) {
       image = this.generalForm.get('image').value;
     }
 
@@ -126,6 +128,8 @@ export class SettingsComponent implements OnInit {
         this.user = user;
         this.setSuccessMessage('Settings changed successfully!');
         this.generalProcessing = false;
+        this.fileName =  '';
+        this.tweetImage.nativeElement.value = '';
         this.generalForm.markAsPristine();
       })
       .catch(error => {
@@ -299,7 +303,7 @@ export class SettingsComponent implements OnInit {
       this.statisticService.getUserStatistic([this.user.username])
         .then(statistic => {
           const imagePercent = statistic.imageTweets / (statistic.tweets || 1);
-          statistic.imageTweets = parseFloat(imagePercent.toFixed(2)) * 100;
+          statistic.imageTweets =  Math.round(imagePercent * 100);
           this.userStatistic = statistic;
         }).catch(error => console.log(error));
     }

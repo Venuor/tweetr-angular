@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TweetService } from '../../services/tweet.service';
 import { Tweet } from '../../model/tweet';
@@ -25,6 +25,7 @@ export class UserComponent implements OnInit, OnDestroy {
   showRemove: boolean;
 
   tweetForm: FormGroup;
+  @ViewChild('image') tweetImage: ElementRef;
   fileName: string;
   tweetProcessing: boolean;
 
@@ -74,7 +75,8 @@ export class UserComponent implements OnInit, OnDestroy {
     this.tweetService.postTweet(formData)
       .then(result => {
         this.tweetForm.get('text').setValue('');
-        this.tweetForm.get('image').reset();
+        this.tweetForm.get('image').setValue('');
+        this.tweetImage.nativeElement.value = '';
         this.fileName = '';
         this.getTweets(this.user.username);
         this.tweetProcessing = false;
@@ -151,7 +153,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: any) {
-    if (error.error.statusCode === 401) {
+    if (error.error && error.error.statusCode === 401) {
       this.getUser(this.user.username);
       this.userService.logout();
     }
