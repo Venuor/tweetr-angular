@@ -30,6 +30,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { StatisticsService } from './services/statistics.service';
 import { SignupComponent } from './components/signup/signup.component';
 import { UserOverviewComponent } from './pages/user-overview/user-overview.component';
+import { SocialGraphComponent } from './components/social-graph/social-graph.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { UserOverviewComponent } from './pages/user-overview/user-overview.compo
     SettingsComponent,
     AdminComponent,
     SignupComponent,
-    UserOverviewComponent
+    UserOverviewComponent,
+    SocialGraphComponent
   ],
   imports: [
     BrowserModule,

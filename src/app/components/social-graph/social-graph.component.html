@@ -1,0 +1,8 @@
+<svg height="180" width="230" #socialGraph>
+  <filter id="dropshadow" height="200%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+    <feOffset dx="0" dy="0" result="offsetBlur"/>
+    <feFlood flood-color="#fff" flood-opacity="0.7" result="offsetColor"/>
+    <feComposite in="offsetColor" in2="offsetBlur" operator="in"/>
+  </filter>
+</svg>

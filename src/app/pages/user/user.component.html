@@ -5,6 +5,11 @@
     <div class="ui four wide column">
       <app-usercard *ngIf="user" (followButtonEvent)="updateUser()"
         [user]="user" [showButton]="showButton" [isFollowing]="isFollowing" ></app-usercard>
+
+      <article class="ui segment d3-graph">
+        <h3><i class="share alternate icon"></i>Social Graph</h3>
+        <app-social-graph [data]="socialGraph"></app-social-graph>
+      </article>
     </div>
     <div class="ui twelve wide column" *ngIf="user">
       <app-timeline (removeEvent)="removeTweet($event)" [tweets]="tweets" [showRemove]="showRemove"

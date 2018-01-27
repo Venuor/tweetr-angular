@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../model/user';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SocialGraph } from '../../model/social-graph';
 
 @Component({
   selector: 'app-user',
@@ -16,6 +17,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class UserComponent implements OnInit, OnDestroy {
   tweets: Tweet[];
   user: User;
+  socialGraph: SocialGraph;
+
   loggedInUser: User;
   showButton: boolean;
   isFollowing: boolean;
@@ -42,6 +45,7 @@ export class UserComponent implements OnInit, OnDestroy {
       const username = params.get('username');
       this.getTweets(username);
       this.getUser(username);
+      this.getSocialGraphData(username);
     });
   }
 
@@ -137,6 +141,13 @@ export class UserComponent implements OnInit, OnDestroy {
     this.tweetService.getTweetsForUsername(username)
       .toPromise()
       .then(tweets => this.tweets = tweets);
+  }
+
+  private getSocialGraphData(username) {
+    this.userService.getSocialGraph(username)
+      .then(graph => {
+        this.socialGraph = graph;
+      }).catch(err => console.log(err));
   }
 
   private handleError(error: any) {

@@ -4,6 +4,7 @@ import { ApiSettings } from '../model/api-settings';
 import { User } from '../model/user';
 import { LocalStorageService } from './local-storage.service';
 import { Token } from '../model/token';
+import { SocialGraph } from '../model/social-graph';
 
 @Injectable()
 export class UserService {
@@ -109,6 +110,11 @@ export class UserService {
       ApiSettings.API_HOST + '/api/users',
       { headers: this.getAuthHeader(), params:  params }
       ).toPromise();
+  }
+
+  public getSocialGraph(username: string) {
+    return this.http.get<SocialGraph>(ApiSettings.API_HOST + '/api/statistics/graph/' + username)
+      .toPromise();
   }
 
   private getAuthHeader(): HttpHeaders {

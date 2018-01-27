@@ -14,3 +14,32 @@
   display: block;
   padding-top: 100%; 	/* initial ratio of 1:1*/
 }
+
+circle:hover {
+  fill: #f26202;
+}
+
+circle.hover-stroke {
+  visibility: hidden;
+}
+
+text {
+  visibility: hidden;
+}
+
+text.shadow {
+  visibility: hidden;
+  filter: url(#dropshadow);
+}
+
+g:hover > text {
+  visibility: visible;
+}
+
+g:hover > text.label {
+  fill: #f26202;
+}
+
+g:hover > circle.hover-stroke {
+  visibility: visible;
+}
